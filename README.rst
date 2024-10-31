@@ -45,9 +45,10 @@ How to use
 
       PowerShell's `execution policy <https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_execution_policies>`_
       prevents execution of unsigned scripts. The ``-ExecutionPolicy Bypass`` in the
-      above command bypasses it to enable ``whistle.ps1`` to be executed. I do not want
-      to buy a code-signing certificate, but I will easily change my mind if I receive
-      enough sponsorship.
+      above command bypasses it to enable ``whistle.ps1`` to be executed. I do not
+      currently want to buy a code-signing certificate. However, I will easily change
+      my mind if I receive enough sponsorship. See the `Sponsoring`_ section for
+      sponsoring information.
 
 Parameters
 ----------
@@ -220,6 +221,42 @@ modifications in the ``whistle.bash`` file:
 
 4. Update the ``display_help()`` function mentioning the ``watchdog`` setup bundle,
    with additional explanation if necessary.
+
+Sponsoring
+----------
+
+If you like ``whistle`` and you are doing well in life, you can sponsor it. You can
+make a recurring or a one-time contribution with any amount of your choice. My finances
+are thankfully in a reasonably healthy state, so the sponsorship is for you to feel
+good about supporting what you found useful.
+
+.. pull-quote:: \:pray: **CREDIT**
+
+   The text of the above message is inspired by `agadmator's Excellent Subscribers video <https://youtu.be/wlPl__FzaTI?si=hVwbV0tAUwyWMpTF>`_.
+
+**Sponsoring options**
+
+Sponsor using one of the following options:
+
+.. raw:: html
+
+   <a href="https://github.com/sponsors/dragondive"><img src="https://img.shields.io/badge/Github-%E2%9E%9C-black?style=for-the-badge&logo=github" alt="Github - ➜"></a>
+   <br>
+   <a href="https://buymeacoffee.com/dragondive"><img src="https://img.shields.io/badge/Buy_me_a_coffee-%E2%9E%9C-black?style=for-the-badge&logo=buymeacoffee" alt="Buy me a coffee - ➜"></a>
+
+|
+
+You can also sponsor directly with Unified Payments Interface (UPI) :fire:, if you are
+Indian :india: or in a country that supports remittance by UPI to India. Scan the below
+QR code or use my UPI id ``apai@upi``.
+
+.. raw:: html
+
+   <div align="center">
+      <a href="upi://pay?pa=apai@upi&pn=Aravind%20%20Pai&cu=INR&mode=02&purpose=00&orgid=189999&sign=1pB+zZ+Dp+6ACZlEhfuzNf90Guvoh6QoE/0zlgetfhcN65/L6BULimTDkH5gPm2roKSh62NDYcLAXLlUA8zQPZpy6sOqpfVeyklufuWsE2cA7bGR4l8whufvlgC8p4v66UZB7IuCKIlfgcOuMpYSY1kRI+EEuN5DLaiQyjpd/bI=">
+         <img src="https://raw.githubusercontent.com/dragondive/.github/refs/heads/main/apai_upi_qrcode.jpg" alt="upi://pay?pa=apai@upi&pn=Aravind%20%20Pai&cu=INR&mode=02&purpose=00&orgid=189999&sign=1pB+zZ+Dp+6ACZlEhfuzNf90Guvoh6QoE/0zlgetfhcN65/L6BULimTDkH5gPm2roKSh62NDYcLAXLlUA8zQPZpy6sOqpfVeyklufuWsE2cA7bGR4l8whufvlgC8p4v66UZB7IuCKIlfgcOuMpYSY1kRI+EEuN5DLaiQyjpd/bI=" title="sponsor dragondive" width="200">
+      </a>
+   </div>
 
 Frequently Asked Questions
 --------------------------
