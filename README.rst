@@ -83,9 +83,9 @@ Parameters
      -
    * - ``-SetupArgs``
      - Arguments for the setup script ``whistle.bash``.
-     - ``"'-h'"``, ``"'-b python3'"``, ``"'-u dragondive -b copy-ssh-keys'"``
+     - ``"-h"``, ``"-b python3"``, ``"-u dragondive -b copy-ssh-keys"``
      - ``""``
-     - This needs to be enclosed in *both* double quotes and single quotes.
+     - This needs to be enclosed in double quotes.
        Run with ``"'-h'"`` for the full description of the supported arguments.
 
 Contributor Documentation

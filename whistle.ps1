@@ -89,4 +89,4 @@ winget install --exact --verbose --accept-package-agreements --accept-source-agr
 $ScriptDir = "$env:TEMP"
 Copy-Item -Path $(Join-Path $PWD "whistle.bash") -Destination $ScriptDir
 Set-Location -Path $ScriptDir
-wsl --distribution $WslDistroName -- bash whistle.bash $SetupArgs
+wsl --distribution $WslDistroName -- bash -c "./whistle.bash $SetupArgs"
