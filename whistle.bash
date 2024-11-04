@@ -23,6 +23,7 @@ Usage: whistle.bash [OPTION]...
     specific setup bundles is described below.
 
 Available setup bundles:
+    - rust
     - python3
     - copy-ssh-keys
         Copies ssh keys from Windows to WSL2 and sets the correct permissions.
@@ -43,6 +44,7 @@ eval set -- "$options"
 declare -A EXECUTE_BUNDLE
 EXECUTE_BUNDLE=(
     [python3]=0
+    [rust]=0
     [copy-ssh-keys]=0
     [docker]=1
     [git]=1
@@ -206,6 +208,21 @@ if [[ $EUID -eq 0 ]]; then
         )
     fi
 
+
+    if [[ ${EXECUTE_BUNDLE[rust]} -eq 1 ]]; then
+        echo "Installing Rust..."
+        sudo apt-get install -yq build-essential
+
+        VSCODE_EXTENSIONS+=(\
+            "rust-lang.rust-analyzer" \
+            "tamasfe.even-better-toml" \
+            "fill-labs.dependi" \
+            "vadimcn.vscode-lldb" \
+            "usernamehw.errorlens" \
+            "bierner.docs-view" \
+        )
+    fi
+
     echo "Switching to the standard user for further configuration..."
     exec sudo \
         --preserve-env=USERNAME,PATH,WSL_DISTRO_NAME \
@@ -221,6 +238,11 @@ if [[ ${EXECUTE_BUNDLE[copy-ssh-keys]} -eq 1 ]]; then
     mkdir -p ~/.ssh && cp -v /mnt/c/Users/$USERNAME/.ssh/id_* ~/.ssh
     find ~/.ssh -type f -exec grep -rlE -- '-----BEGIN.*PRIVATE KEY-----' {} + \
         | xargs -I {} chmod -v 600 {} # private key files need to have permission 600
+fi
+
+if [[ ${EXECUTE_BUNDLE[rust]} -eq 1 ]]; then
+    echo "Installing Rust..."
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 fi
 
 echo "Installing vscode extensions..."
