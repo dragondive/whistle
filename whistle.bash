@@ -89,21 +89,6 @@ for bundle in "${!EXECUTE_BUNDLE[@]}"; do
 done
 echo "$EXECUTE_BUNDLE_MESSAGE"
 
-VSCODE_EXTENSIONS=(\
-    "ms-vscode-remote.remote-containers" \
-    "ms-vscode-remote.remote-ssh" \
-    "ms-vscode-remote.remote-ssh-edit" \
-    "ms-vscode-remote.remote-wsl" \
-    "ms-vscode.remote-explorer" \
-    "ms-vscode-remote.remote-wsl" \
-    "ms-vscode-remote.vscode-remote-extensionpack" \
-    "vscode-icons-team.vscode-icons" \
-    "shd101wyy.markdown-preview-enhanced" \
-    "redhat.vscode-yaml" \
-    "tamasfe.even-better-toml" \
-    "bierner.emojisense" \
-)
-
 if [[ $EUID -eq 0 ]]; then
     echo "Executing setup as the root user..."
 
@@ -140,6 +125,21 @@ if [[ $EUID -eq 0 ]]; then
     # credit: https://github.com/microsoft/WSL/issues/8952#issuecomment-1568212651
     sh -c 'echo :WSLInterop:M::MZ::/init:PF > /usr/lib/binfmt.d/WSLInterop.conf'
     systemctl restart systemd-binfmt
+
+    VSCODE_EXTENSIONS=(\
+        "ms-vscode-remote.remote-containers" \
+        "ms-vscode-remote.remote-ssh" \
+        "ms-vscode-remote.remote-ssh-edit" \
+        "ms-vscode-remote.remote-wsl" \
+        "ms-vscode.remote-explorer" \
+        "ms-vscode-remote.remote-wsl" \
+        "ms-vscode-remote.vscode-remote-extensionpack" \
+        "vscode-icons-team.vscode-icons" \
+        "shd101wyy.markdown-preview-enhanced" \
+        "redhat.vscode-yaml" \
+        "tamasfe.even-better-toml" \
+        "bierner.emojisense" \
+    )
 
     if [[ ${EXECUTE_BUNDLE[docker]} -eq 1 ]]; then
         echo "Installing docker..."
@@ -216,20 +216,17 @@ if [[ $EUID -eq 0 ]]; then
         )
     fi
 
-    export VSCODE_EXTENSIONS_INSTALL_COMMAND="code --force --verbose "
-    for extension in "${VSCODE_EXTENSIONS[@]}"; do
-        VSCODE_EXTENSIONS_INSTALL_COMMAND+="--install-extension ${extension} "
-    done
-
     echo "Switching to the standard user for further configuration..."
+    export VSCODE_EXTENSIONS_STR=$(IFS=:; echo "${VSCODE_EXTENSIONS[*]}")
     exec sudo \
-        --preserve-env=USERNAME,PATH,WSL_DISTRO_NAME,VSCODE_EXTENSIONS_INSTALL_COMMAND \
+        --preserve-env=USERNAME,PATH,WSL_DISTRO_NAME,VSCODE_EXTENSIONS_STR \
         --login \
         --user "$DEFAULT_USER" \
         "$(realpath $0)" "${ARGUMENTS[@]}"
 fi
 
 echo "Running configuration as the standard user..."
+IFS=: read -r -a VSCODE_EXTENSIONS <<< "$VSCODE_EXTENSIONS_STR"
 
 if [[ ${EXECUTE_BUNDLE[copy-ssh-keys]} -eq 1 ]]; then
     echo "Copying ssh keys from Windows to WSL2..."
@@ -255,6 +252,10 @@ if [[ ${EXECUTE_BUNDLE[rust]} -eq 1 ]]; then
 fi
 
 echo "Installing vscode extensions..."
+VSCODE_EXTENSIONS_INSTALL_COMMAND="code --force --verbose "
+for extension in "${VSCODE_EXTENSIONS[@]}"; do
+    VSCODE_EXTENSIONS_INSTALL_COMMAND+="--install-extension ${extension} "
+done
 eval "$VSCODE_EXTENSIONS_INSTALL_COMMAND"
 
 echo "WSL2 setup completed!"
