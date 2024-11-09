@@ -195,19 +195,12 @@ if [[ $EUID -eq 0 ]]; then
         echo "Installing Python 3..."
         sudo apt-get install -yq python3 python3-pip python3-venv python3-wheel
 
-        POETRY_HOME=/home/$DEFAULT_USER/.local
-        curl -sSL https://install.python-poetry.org | POETRY_HOME=$POETRY_HOME python3 -
-        printf "%b" \
-        "export PATH=\"\$PATH:$POETRY_HOME\"\n" \
-            | tee -a /home/$DEFAULT_USER/.profile
-
         VSCODE_EXTENSIONS+=(\
             "ms-python.python" \
             "ms-python.debugpy" \
             "ms-python.isort" \
         )
     fi
-
 
     if [[ ${EXECUTE_BUNDLE[rust]} -eq 1 ]]; then
         echo "Installing Rust..."
@@ -243,6 +236,17 @@ if [[ ${EXECUTE_BUNDLE[copy-ssh-keys]} -eq 1 ]]; then
     mkdir -p ~/.ssh && cp -v /mnt/c/Users/$USERNAME/.ssh/id_* ~/.ssh
     find ~/.ssh -type f -exec grep -rlE -- '-----BEGIN.*PRIVATE KEY-----' {} + \
         | xargs -I {} chmod -v 600 {} # private key files need to have permission 600
+fi
+
+
+if [[ ${EXECUTE_BUNDLE[python3]} -eq 1 ]]; then
+    echo "Installing Python 3..."
+
+    POETRY_HOME=$HOME/.local
+    curl -sSL https://install.python-poetry.org | POETRY_HOME=$POETRY_HOME python3 -
+    printf "%b" \
+    "export PATH=\"\$PATH:$POETRY_HOME\"\n" \
+        | tee -a $HOME/.profile
 fi
 
 if [[ ${EXECUTE_BUNDLE[rust]} -eq 1 ]]; then
