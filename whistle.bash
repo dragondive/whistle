@@ -223,9 +223,14 @@ if [[ $EUID -eq 0 ]]; then
         )
     fi
 
+    export VSCODE_EXTENSIONS_INSTALL_COMMAND="code --force --verbose "
+    for extension in "${VSCODE_EXTENSIONS[@]}"; do
+        VSCODE_EXTENSIONS_INSTALL_COMMAND+="--install-extension ${extension} "
+    done
+
     echo "Switching to the standard user for further configuration..."
     exec sudo \
-        --preserve-env=USERNAME,PATH,WSL_DISTRO_NAME \
+        --preserve-env=USERNAME,PATH,WSL_DISTRO_NAME,VSCODE_EXTENSIONS_INSTALL_COMMAND \
         --login \
         --user "$DEFAULT_USER" \
         "$(realpath $0)" "${ARGUMENTS[@]}"
@@ -246,10 +251,6 @@ if [[ ${EXECUTE_BUNDLE[rust]} -eq 1 ]]; then
 fi
 
 echo "Installing vscode extensions..."
-VSCODE_EXTENSIONS_INSTALL_COMMAND="code --force --verbose "
-for extension in "${VSCODE_EXTENSIONS[@]}"; do
-    VSCODE_EXTENSIONS_INSTALL_COMMAND+="--install-extension ${extension} "
-done
 eval "$VSCODE_EXTENSIONS_INSTALL_COMMAND"
 
 echo "WSL2 setup completed!"
