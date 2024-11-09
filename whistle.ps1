@@ -90,3 +90,4 @@ $ScriptDir = "$env:TEMP"
 Copy-Item -Path $(Join-Path $PWD "whistle.bash") -Destination $ScriptDir
 Set-Location -Path $ScriptDir
 wsl --distribution $WslDistroName -- bash -c "./whistle.bash $SetupArgs"
+wsl --terminate $WslDistroName
