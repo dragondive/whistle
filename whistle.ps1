@@ -90,7 +90,6 @@ Write-Host "Successfully imported WSL Ubuntu image '$ReleaseName' to '$WslDistro
 # Install vscode on Windows because we will use inside WSL2. This is more convenient
 # and flexible than the direct installation inside WSL2.
 winget install --exact --verbose --accept-package-agreements --accept-source-agreements `
---version 1.93.0 --force <# prevent "upgrade" to 1.94.0 due to this bug: https://github.com/microsoft/vscode/issues/230584 #> `
 --id Microsoft.VisualStudioCode
 
 $ScriptDir = "$env:TEMP"
