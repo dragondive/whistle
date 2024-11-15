@@ -226,6 +226,7 @@ if [[ $EUID -eq 0 ]]; then
 fi
 
 echo "Running configuration as the standard user..."
+echo "export USERNAME=$USERNAME" | tee -a /$HOME/.profile
 IFS=: read -r -a VSCODE_EXTENSIONS <<< "$VSCODE_EXTENSIONS_STR"
 
 if [[ ${EXECUTE_BUNDLE[copy-ssh-keys]} -eq 1 ]]; then
