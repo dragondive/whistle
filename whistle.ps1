@@ -71,6 +71,13 @@ else
     Write-Host "WSL Ubuntu image '$ReleaseName' already exists, skipping download."
 }
 
+$ShareEnvironmentVariableUsername = "USERNAME/u"
+if (-not ($env:WSLENV -and $env:WSLENV -match [regex]::Escape($ShareEnvironmentVariableUsername)))
+{
+    Write-Host "Setting up WSLENV variable to share Windows USERNAME with WSL."
+    $env:WSLENV += ":$ShareEnvironmentVariableUsername"
+}
+
 $WslPackagesDir = "$env:LOCALAPPDATA/Packages/WSL"
 [System.IO.Directory]::CreateDirectory($WslPackagesDir) | Out-Null
 wsl --import $WslDistroName $WslPackagesDir/$WslDistroName $ImagePath
