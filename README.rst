@@ -9,28 +9,37 @@ instances and provision them.
 How to use
 ----------
 
-1. Download this repository as a zip file and extract it into any directory on your
-   local machine.
-
-2. Open a powershell terminal and navigate to that directory.
-
 .. pull-quote:: \:one: **ONE-TIME SETUP**
 
-   Install WSL with the following command, then restart your computer.
+   1. Install WSL with the below command
 
    .. code-block:: terminal
 
       wsl --install --no-distribution
 
+   2. Restart your computer.
+
+1. Download this repository as a zip file and extract it to any directory on your Windows machine.
+2. Open a powershell terminal and navigate to that directory.
+
+.. pull-quote:: \:bulb: **TIP**
+
+   Run the below command to read the help message. Determine the setup bundles you want to install
+   on the new WSL2 instance and any other customizations you want to make.
+
+   .. code-block:: powershell
+
+      PowerShell -ExecutionPolicy Bypass -File .\whistle.ps1 -Help
+
 3. Run the following command:
 
    .. code-block:: powershell
 
-      PowerShell -ExecutionPolicy Bypass -File .\whistle.ps1 --WslDistroName whistleblower
+      PowerShell -ExecutionPolicy Bypass -File .\whistle.ps1
 
-   This creates a new WSL2 instance of the default Linux flavour and release with only
-   the core setup bundles installed. See the `Parameters`_ section below to install
-   additional optional bundles and for other customizations.
+   This creates a new WSL2 instance of the default Linux flavour and release, with the default
+   instance name and only the core setup bundles installed. See the `Parameters`_ section below to
+   provision your WSL2 instance with additional setup bundles and for other customizations.
 
    .. pull-quote:: \:bangbang: **IMPORTANT**
 
@@ -83,10 +92,16 @@ Parameters
      -
    * - ``-SetupArgs``
      - Arguments for the setup script ``whistle.bash``.
-     - ``"-h"``, ``"-b python3"``, ``"-u dragondive -b copy-ssh-keys"``
+     - ``"-h"``, ``"-b python3"``, ``"-u dragondive -b copy-ssh-keys,rust"``
      - ``""``
-     - This needs to be enclosed in double quotes.
-       Run with ``"'-h'"`` for the full description of the supported arguments.
+     - The argument string to ``-SetupArgs`` needs to be enclosed in double quotes.
+   * - ``-Help``
+     - Display information on how to use ``whistle`` to create and provision a new WSL2 instance.
+     -
+     -
+     - Use this information to determine the setup bundles you want to install and any other
+       customizations you want to make.
+
 
 Contributor Documentation
 -------------------------
