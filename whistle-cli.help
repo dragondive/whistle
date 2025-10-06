@@ -1,0 +1,25 @@
+-h, --help
+    Display this help message and exit
+
+-u, --username <username>
+    Create a local user <username> in the WSL2 instance and set it as the default user.
+    Also prompts to set the password for the user.
+
+    If not specified, the WSL2 distro name will be the default username and password.
+
+-b, --setup-bundles [bundles,...]
+    Comma-separated list of setup bundles to be executed. Some setup bundles are considered
+    core bundles and will always be executed.
+
+    Usually the setup bundles will install the respective application, some useful utilities, and
+    perform standard configurations. Additional information about specific setup bundles is
+    described below.
+
+Available setup bundles:
+    - rust
+    - python3
+    - copy-ssh-keys
+        Copies ssh keys from Windows to WSL2 and sets the correct permissions.
+    - docker [core bundle]
+    - git [core bundle]
+    - utils [core bundle]

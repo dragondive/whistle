@@ -2,8 +2,8 @@
 .SYNOPSIS
     Download, create and provision an Ubuntu WSL2 instance.
 .DESCRIPTION
-    This script downloads a user-specified Ubuntu WSL2 image, then creates and
-    provisions a WSL2 instance using the downloaded image.
+    This script downloads a user-specified Ubuntu WSL2 image, then creates and provisions a WSL2
+    instance using the downloaded image.
 .PARAMETER WslDistroName
     User-chosen name for the WSL2 instance to be created.
 
@@ -16,8 +16,8 @@
     Example values: noble, jammy
     Default: noble
 .PARAMETER ReleaseTag
-    Ubuntu release tag. Available release tags are found inside the directory of the
-    specified release on the Ubuntu WSL images page.
+    Ubuntu release tag. Available release tags are found inside the directory of the specified
+    release on the Ubuntu WSL images page.
 
     Example values: current, 20241008
     Default: current
@@ -27,13 +27,15 @@
     Example values: amd64, arm64
     Default: amd64
 .PARAMETER SetupArgs
-    Arguments for the setup script `whistle.bash`.
-    Due to powershell's parsing limitations, this needs to be enclosed in _both_
-    double quotes and single quotes.
-    Use "'-h'" as the argument to see the arguments documentation.
+    Arguments for the setup script `whistle.bash`. This needs to be enclosed in double quotes.
 
-    Example values: "'-h'", "'-b python3'", "'-u dragondive -b copy-ssh-keys'"
+    Example values: "-b rust", "-u dragondive -b copy-ssh-keys,python3"
     Default: ""
+
+    Detailed help on the arguments is provided below.
+
+.PARAMETER Help
+    Show information on how to use this script and exit.
 #>
 param
 (
@@ -50,8 +52,22 @@ param
     [string]$ReleaseArch = "amd64",
 
     [Parameter(HelpMessage="Arguments for the setup script whistle.bash")]
-    [string]$SetupArgs = ""
+    [string]$SetupArgs = "",
+
+    [Parameter(HelpMessage="Show information on how to use this script and exit.")]
+    [switch]$Help = $false
 )
+
+if ($Help)
+{
+    Get-Help -Name $MyInvocation.MyCommand.Path -Detailed -ErrorAction SilentlyContinue
+    Write-Host "-----------------------------------------------------------------"
+    Write-Host "Detailed help on the arguments for the setup script whistle.bash:"
+    Write-Host "-----------------------------------------------------------------"
+    Get-Content -Path whistle-cli.help
+    Write-Host "-----------------------------------------------------------------"
+    exit 0
+}
 
 $WslUbuntuUrl = "https://cloud-images.ubuntu.com/wsl"
 $ImageName = "ubuntu-$ReleaseName-wsl-$ReleaseArch-ubuntu.rootfs.tar.gz"
